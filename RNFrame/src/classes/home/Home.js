@@ -6,6 +6,7 @@ import HomeGridView from './HomeGridView';
 import HomeRecommendCell from './HomeRecommendCell';
 import api from '../../common/api';
 import { get } from '../../network/network';
+import { requestDiscount, requestRecommend } from '../../actions/homeActions';
 
 const menuInfos = [
   { title: '美食', icon: require('../../images/home/icon_homepage_food_category.png') },
@@ -36,42 +37,12 @@ class Home extends Component {
   });
   constructor(props) {
     super(props);
-    this.state = {
-      discounts: [],
-      recommendData: [],
-      showModal: false,
-    }
   }
   componentDidMount() {
     console.log(this.props);
     
-    this.requestDiscount();
-    this.requestRecommand();
-  }
-
-  requestDiscount = () => {
-    get(api.discount).then((result) => {
-      this.setState({ discounts: result.data });
-    })
-  }
-
-  requestRecommand = () => {
-    get(api.recommend).then((result) => {
-      let dataList = result.data.map(
-        (info) => {
-          return {
-            id: info.id,
-            imageUrl: info.squareimgurl,
-            title: info.mname,
-            subtitle: `[${info.range}]${info.title}`,
-            price: info.price
-          }
-        }
-      )
-      this.setState({
-        recommendData: dataList,
-      })
-    })
+    this.props.dispatch(requestDiscount());
+    this.props.dispatch(requestRecommend());
   }
 
   menuItemPress = (index) => {
@@ -83,7 +54,7 @@ class Home extends Component {
       <View>
         <HomeMenuView menuInfos={menuInfos} menuItemPress={this.menuItemPress} />
         <View style={{ height: 10, backgroundColor: '#f3f3f3' }}></View>
-        <HomeGridView grids={this.state.discounts} />
+        <HomeGridView grids={this.props.discountData} />
         <View style={{ height: 10, backgroundColor: '#f3f3f3' }}></View>
       </View>
     );
@@ -100,7 +71,7 @@ class Home extends Component {
       <View>
         <FlatList
           ListHeaderComponent={headerView}
-          data={this.state.recommendData}
+          data={this.props.recommendData}
           renderItem={cell}
           keyExtractor={(record) => record.id}
         />
@@ -112,6 +83,8 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     showLoginModal: state.common.showLoginModal,
+    recommendData: state.home.recommendData,
+    discountData: state.home.discountData,
   }
 }
 

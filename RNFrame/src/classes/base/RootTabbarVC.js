@@ -80,7 +80,7 @@ const TabNavigatorConfigs = {
 const Tabbar = TabNavigator(TabRouteConfigs, TabNavigatorConfigs);
 
 class RootTabbarVC extends Component {
-  componentDidMount() {    
+  componentDidMount() {
     this.loginListen = DeviceEventEmitter.addListener('showLoginVC', (e) => {
       this.props.navigation.navigate('LoginVC');
     });
@@ -109,7 +109,7 @@ const StackNavigatorConfigs = {
 }
 const Navigator = StackNavigator(StackRouteConfigs, StackNavigatorConfigs);
 
-class Root extends Component {  
+class Root extends Component {
   render() {
     return (
       <Navigator />

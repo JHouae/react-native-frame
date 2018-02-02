@@ -1,15 +1,15 @@
 import * as types from '../actions/types';
 
 const initialState = {
-	showLoginModal: false,
+	toast: '',
 };
 
 function common(state = initialState, action) {
   switch (action.type) {
-    case types.loginModal:
+    case types.showToast:
       return {
         ...state,
-        showLoginModal: action.payload,
+        toast: action.payload,
       };
     default: 
       return state;

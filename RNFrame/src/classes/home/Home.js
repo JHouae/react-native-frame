@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, DeviceEventEmitter } from 'react-native';
 import { connect } from 'react-redux';
+import Toast from 'react-native-root-toast';
 import HomeMenuView from './HomeMenuView';
 import HomeGridView from './HomeGridView';
 import HomeRecommendCell from './HomeRecommendCell';
 import api from '../../common/api';
 import { get } from '../../network/network';
 import { requestDiscount, requestRecommend } from '../../actions/homeActions';
+
 
 const menuInfos = [
   { title: '美食', icon: require('../../images/home/icon_homepage_food_category.png') },
@@ -46,7 +48,19 @@ class Home extends Component {
   }
 
   menuItemPress = (index) => {
-    DeviceEventEmitter.emit('showLoginVC');
+    // DeviceEventEmitter.emit('showLoginVC');
+  }
+
+  showToast = () => {
+    const toast = this.props.toast;
+    Toast.show(toast, {
+      duration: 2000, // toast显示时长
+      position: Toast.positions.CENTER, // toast位置
+      shadow: true, // toast是否出现阴影
+      animation: true, // toast显示/隐藏的时候是否需要使用动画过渡
+      hideOnPress: true, // 是否可以通过点击事件对toast进行隐藏
+      delay: 0, // toast显示的延时
+    });
   }
 
   render() {
@@ -82,9 +96,9 @@ class Home extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    showLoginModal: state.common.showLoginModal,
     recommendData: state.home.recommendData,
     discountData: state.home.discountData,
+    toast: state.common.toast,
   }
 }
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {View, Text, StyleSheet, Image, SectionList} from 'react-native';
 import { connect } from 'react-redux';
 import MineCell from './MineCell';
-import { presentLoginVC } from '../../actions/common';
 
 class Mine extends Component {
     static navigationOptions = ({navigation}) => ({
@@ -37,9 +36,7 @@ class Mine extends Component {
     }
 
     selectedItem = (index) => {
-        // console.log(index);
         this.props.navigation.navigate('ErrorVC');
-        // this.props.dispatch(presentLoginVC());
     }
     
     keyExtractor(item ,index) {

@@ -1,6 +1,7 @@
 import * as types from './types';
 import { get } from '../network/network';
 import api from '../common/api';
+import Toast from 'react-native-root-toast';
 
 export function requestDiscount() {
   return (dispatch) => {
@@ -31,6 +32,7 @@ export function requestRecommend() {
           }
         }
       )
+      Toast.show('=.=');
       dispatch({
         type: types.requestRecommend, 
         payload: dataList
